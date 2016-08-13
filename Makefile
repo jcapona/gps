@@ -2,6 +2,9 @@
 CXX=g++ -std=c++11
 INCLUDES=-Iinclude -I../serial/include/
 CXXOPTS=-Wall -g -O2
+ifeq "$(ENV)" "DEBUG"
+    CXXOPTS += -DDEBUG
+endif
 CXXFLAGS=$(CXXOPTS) $(INCLUDES)
 LDFLAGS=
 LDLIBS=
@@ -9,6 +12,7 @@ LDLIBS=
 LIB=lib/libgps.a
 
 default: all
+
 # Object files
 OBJS=src/gps.o
 

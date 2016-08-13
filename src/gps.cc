@@ -1,6 +1,12 @@
 #include <gps.h>
 #include <serial.h>
 
+#ifdef DEBUG
+#define DEBUG 1
+#else
+#define DEBUG 0
+#endif
+
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -95,8 +101,11 @@ gps::impl::impl(std::string dev, int baud) {
     }
     catch(std::exception &e) {
         std::cout << "\n" << e.what() << "\n";
-        throw std::runtime_error("[GPS] Error communicating with device \n");
+        throw std::runtime_error("[gps] Error communicating with device \n");
     }
+
+    if(DEBUG)
+        std::cout << "[gps : gps] Connected to " << dev << " @ " << baud << " kbps\n";
 
     m_latitude = 0.0;
     m_longitude = 0.0;
@@ -358,7 +367,8 @@ int gps::impl::read() {
     std::string cmd;
     serialPort->read(cmd);
 
-    //std::cout << cmd << "\n";
+    if(DEBUG)
+        std::cout << "[gps : read] " << cmd << "\n";
 
     if(cmd.find("GPRMC") != std::string::npos) {
         decodeGPRMC((char*)cmd.c_str());
@@ -377,7 +387,7 @@ int gps::impl::read() {
 }
 
 /**
-    Reads data from file (DEBUG)
+    Reads data from file, for testing
 */
 int gps::impl::readFromFile(const char* file) {
     char line[80];
