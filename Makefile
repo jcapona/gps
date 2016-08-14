@@ -1,6 +1,6 @@
 
 CXX=g++ -std=c++11
-INCLUDES=-Iinclude -I../serial/include/
+INCLUDES=-Iinclude
 CXXOPTS=-Wall -g -O2
 ifeq "$(ENV)" "DEBUG"
     CXXOPTS += -DDEBUG
@@ -24,7 +24,7 @@ lib:
 $(LIB): $(LIB)($(OBJS))
 
 clean:
-	rm -f lib/*.a src/*.o
+	rm -f lib/libgps.a src/*.o
 
 %.d: %.cc
 	$(CXX) -MM -MP -MF $@ -MT "$(@:.d=.o) $@" $(INCLUDES) $<

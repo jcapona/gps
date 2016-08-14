@@ -1,7 +1,7 @@
 
 CXX=g++ -std=c++11
 # Includes, cflags
-INCLUDES=-I../include -L../lib -I../../serial/include -L../lib -L../../serial/lib
+INCLUDES=-I../include -L../lib
 CXXOPTS=-Wall -O2
 CXXFLAGS=$(CXXOPTS) $(INCLUDES)
 # Libs flags
